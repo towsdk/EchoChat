@@ -96,6 +96,7 @@ export function EchoChatDashboard() {
   const [forwardedMessages, setForwardedMessages] = useState<Message[]>([]);
   const [activityLog, setActivityLog] = useState<ActivityLog[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [newMessageText, setNewMessageText] = useState("");
   const messageCounter = useRef(0);
 
   const handleToggleSource = () => {
@@ -112,6 +113,24 @@ export function EchoChatDashboard() {
         setIsConnectingDest(false);
     }, 1500);
   };
+  
+  const handleSendNewMessage = () => {
+    if (newMessageText.trim() === "") return;
+
+    const timestamp = format(new Date(), "p");
+    const newMessage: Message = {
+      id: new Date().toISOString() + Math.random(),
+      sender: "You",
+      text: newMessageText.trim(),
+      timestamp,
+    };
+
+    setSourceMessages(prev => [newMessage, ...prev]);
+    setForwardedMessages(prev => [newMessage, ...prev]); // Also add to forwarded messages
+    setNewMessageText(""); // Clear the input
+  };
+
+
 
   const handleSetTopic = () => {
     const newTopic = topicInputRef.current?.value;
@@ -201,6 +220,17 @@ export function EchoChatDashboard() {
               />
               <Button onClick={handleSetTopic}>Set</Button>
             </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2"><MessageSquare /> Send Message to Source</CardTitle>
+            <CardDescription>Add a message directly to the Source Feed.</CardDescription>
+          </CardHeader>
+          <CardContent className="flex w-full items-center space-x-2">
+              <Input type="text" placeholder="Type your message here..." value={newMessageText} onChange={(e) => setNewMessageText(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleSendNewMessage()} />
+              <Button onClick={handleSendNewMessage}><Send /></Button>
+
           </CardContent>
         </Card>
       </div>
