@@ -43,3 +43,5 @@ next-env.d.ts
 # firebase
 firebase-debug.log
 firestore-debug.log
+
+# GEMINI_API_KEY=AIzaSyBxol4CGJqIedUgzRescI7yPlEHX8zAxjo
