@@ -1,0 +1,1 @@
+this is just for fun page, nothing else -- thanks buddy

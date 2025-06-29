@@ -120,7 +120,7 @@ export function EchoChatDashboard() {
     const timestamp = format(new Date(), "p");
     const newMessage: Message = {
       id: new Date().toISOString() + Math.random(),
-      sender: "You",
+      sender: "Towhid",
       text: newMessageText.trim(),
       timestamp,
     };
@@ -202,6 +202,18 @@ export function EchoChatDashboard() {
         <ConnectionCard title="Destination Group" connected={destConnected} connecting={isConnectingDest} onToggle={handleToggleDest}>
           Connect to the group where relevant messages will be forwarded.
         </ConnectionCard>
+        {/* this section for user typing message option */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2"><MessageSquare /> Send Message to Source</CardTitle>
+            <CardDescription>Add a message directly to the Source Feed.</CardDescription>
+          </CardHeader>
+          <CardContent className="flex w-full items-center space-x-2">
+              <Input type="text" placeholder="Type your message here..." value={newMessageText} onChange={(e) => setNewMessageText(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleSendNewMessage()} />
+              <Button onClick={handleSendNewMessage}><Send /></Button>
+
+          </CardContent>
+        </Card>
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2"><Bot /> AI Filter Configuration</CardTitle>
@@ -222,17 +234,7 @@ export function EchoChatDashboard() {
             </div>
           </CardContent>
         </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2"><MessageSquare /> Send Message to Source</CardTitle>
-            <CardDescription>Add a message directly to the Source Feed.</CardDescription>
-          </CardHeader>
-          <CardContent className="flex w-full items-center space-x-2">
-              <Input type="text" placeholder="Type your message here..." value={newMessageText} onChange={(e) => setNewMessageText(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleSendNewMessage()} />
-              <Button onClick={handleSendNewMessage}><Send /></Button>
 
-          </CardContent>
-        </Card>
       </div>
       <div className="space-y-6 xl:col-span-2">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
